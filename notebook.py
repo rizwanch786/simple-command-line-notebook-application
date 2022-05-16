@@ -50,15 +50,13 @@ class Notebook:
 
     def _find_note(self, note_id):
         '''Locate the note with the given id'''
-        for note in self.notes:
-            if str(note.id) == str(note_id):
-                return note
-        return None
+        return next(
+            (note for note in self.notes if str(note.id) == str(note_id)), None
+        )
 
     def modify_memo(self, note_id, memo):
         '''Find the note with the given id and change its memo to the given value'''
-        note = self._find_note(note_id)
-        if note:
+        if note := self._find_note(note_id):
             note.memo = memo
             return True
         return False
